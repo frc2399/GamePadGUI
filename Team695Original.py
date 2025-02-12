@@ -6,16 +6,10 @@ import time
 import sys
 
 from networktables import NetworkTables
-global location
-global level
-global gamePiece
-global g_allianceColor
-global EventName
-global MatchNumber
-global used_combinations
-g_allianceColor="white"
+G_alliancecolor="white"
 
 def buttonPressed(i):
+    global location
     location = buttonLabels[i]
 
     for butt in buttons:
@@ -28,11 +22,12 @@ def buttonPressed(i):
     combinationater(location, level)
 
 def scoringLevel(button, place):
-    for butt in buttons2:
-        if butt['bg'] == g_allianceColor:
-            butt['bg'] = 'white'
-    button['bg'] = g_allianceColor
+    global level
 
+    for butt in buttons2:
+        if butt['bg'] == G_alliancecolor:
+            butt['bg'] = 'white'
+    button['bg'] = G_alliancecolor
 
     print(place + " was chosen")
     sidecarTables.putString("scoringLevel", place)
@@ -42,6 +37,8 @@ def scoringLevel(button, place):
 
 def gamePieceSelect():
     global currentIntakeMode
+    global gamePiece
+
     if currentIntakeMode == 1:
         currentIntakeMode = 2
         gamePiece.config(bg="#00CED1", text="Algae")
@@ -67,16 +64,20 @@ def gamePieceSelect():
 
 #change color of hexagon depending on alliance color
 def valueChanged(table, key, value, isNew): 
+    global G_alliancecolor
+    global EventName
+    global MatchNumber
 
     print("valueChanged: key: '%s'; value: %s; isNew: %s" % (key, value, isNew))
     if key == "IsRedAlliance":
         if value == True:
-            g_allianceColor = "#DC143C"
+            G_alliancecolor = "#DC143C"
         else:
-            g_allianceColor = "#1E90FF"
+            G_alliancecolor = "#1E90FF"
 
 #log all used combinations
 def combinationater(place, level):
+    global used_combinations
     new_combination = (place, level)
 
     if new_combination not in used_combinations:
@@ -146,7 +147,7 @@ window.title("sidecar") #title
 #canvas
 canvas = tk.Canvas(window, width = 850, height = 500, bg = '#ab3fd9')
 canvas.place(x=0, y=0)
-canvas.create_polygon((300,120, 450,120, 525,250, 450,380, 300,380, 225,250), fill = '#D1D1D1', outline=g_allianceColor, width='5') #hexagon
+canvas.create_polygon((300,120, 450,120, 525,250, 450,380, 300,380, 225,250), fill = '#D1D1D1', outline=G_alliancecolor, width='5') #hexagon
 
 #reef buttons
 buttons = []
