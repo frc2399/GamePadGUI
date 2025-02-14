@@ -16,12 +16,6 @@ global used_combinations
 g_allianceColor="white"
 
 def buttonPressed(i):
-    location = buttonLabels[i]
-
-    for butt in buttons:
-        if butt['bg'] == '#FF1493':
-            butt['bg'] = 'white'
-    buttons[i].config(bg='#FF1493')
 
     print(location + " was chosen")
     sidecarTables.putString("scoringLocation", location)
@@ -40,29 +34,37 @@ def scoringLevel(button, place):
     combinationater(location, place)
 
 
-def gamePieceSelect():
-    global currentIntakeMode
-    if currentIntakeMode == 1:
-        currentIntakeMode = 2
-        gamePiece.config(bg="#00CED1", text="Algae")
-        canvas['bg'] = "#48D1CC"
+def algaeSelect():
+    global gamePieceMode
+    if gamePieceMode == "coral":
+        gamePieceMode = "algae"
+        coralButton.config(bg="#e3e3e3")
 
-        for i in range(1, len(buttons), 2):
-            buttons[i].config(bg='gray', command=obsolete)
         buttons2[0].config(bg='gray', command=obsolete)
         buttons2[3].config(bg='gray', command=obsolete)
     else:
-        currentIntakeMode = 1
-        gamePiece.config(bg="#9400D3", text="Coral")
-        canvas['bg'] = "#ab3fd9"
+        gamePieceMode = "coral"
+        coralButton.config(bg="#9400D3", text="Coral")
 
-        for i in range(1, len(buttons), 2):
-            buttons[i].config(bg='white', command=lambda b=i: buttonPressed(b))
         buttons2[0].config(bg='white', command=lambda: scoringLevel(buttons2[0], "Level 1"))
         buttons2[3].config(bg='white', command=lambda: scoringLevel(buttons2[3], "Level 4"))
 
-    print("Intake mode " + str(currentIntakeMode) + " was chosen")
-    sidecarTables.putNumber("currentIntakeMode", currentIntakeMode)
+    print("Intake mode " + gamePieceMode + " was chosen")
+    sidecarTables.putString("currentIntakeMode", gamePieceMode)
+
+def coralSelect():
+    global gamePieceMode
+    if gamePieceMode == "coral":
+        gamePieceMode = "algae"
+        coralButton.config(bg="#e3e3e3")
+    else:
+        gamePieceMode = "algae"
+
+        buttons2[0].config(bg='white', command=lambda: scoringLevel(buttons2[0], "Level 1"))
+        buttons2[3].config(bg='white', command=lambda: scoringLevel(buttons2[3], "Level 4"))
+
+    print("Intake mode " + gamePieceMode + " was chosen")
+    sidecarTables.putString("currentIntakeMode", gamePieceMode)
 
 
 #change color of hexagon depending on alliance color
@@ -84,18 +86,6 @@ def combinationater(place, level):
         print("New combination added: " + str(new_combination))
     else:
         print("Combination " + str(new_combination) + " already used")
-
-def reset():
-    for butt in buttons:
-        butt['bg'] = "white"
-    for butt in buttons2:
-        butt['bg'] = "white"
-    
-    currentIntakeMode = 1
-    gamePieceSelect()
-
-    sidecarTables.putString("scoringLocation", "")
-    sidecarTables.putString("scoringLevel", "")
 
 
 def obsolete():
@@ -130,8 +120,8 @@ sidecarTables.putString("scoringLocation", "")
 sidecarTables.putString("scoringLevel", "")
 
 #set default intake mode to coral
-currentIntakeMode = 1
-sidecarTables.putNumber("currentIntakeMode", currentIntakeMode)
+gamePieceMode = "coral"
+sidecarTables.putString("GameMode", gamePieceMode)
 
 #set default location and level to nothing
 location = ""
@@ -143,50 +133,24 @@ window = tk.Tk() #create window
 window.geometry("850x500") #size
 window.title("sidecar") #title
 
-#canvas
-canvas = tk.Canvas(window, width = 850, height = 500, bg = '#ab3fd9')
-canvas.place(x=0, y=0)
-canvas.create_polygon((300,120, 450,120, 525,250, 450,380, 300,380, 225,250), fill = '#D1D1D1', outline=g_allianceColor, width='5') #hexagon
 
-#reef buttons
-buttons = []
-buttonLabels = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"]
+#buttons for selecting game piece
+coralButton = tk.Button(window, text="Coral", bg="#fca7a7", font=("Book Antiqua", 18))
+coralButton.config(command=coralSelect)
+coralButton.place(x=50, y=50, height=150, width=150)
 
-i = 0
-while i <= 11:
-    button = tk.Button(
-        window,
-        text=buttonLabels[i],
-        bg="white",
-        font=('Book Antiqua', 18),
-        command=lambda b=i: buttonPressed(b)
-        #command=lambda: [buttonPressed(button), change_color]
-    )
-    buttons.append(button)
-    i += 1
+algaeButton = tk.Button(window,  text="Algae", bg="#8bd7f7", font=("Book Antiqua", 18))
+algaeButton.config(command=algaeSelect)
+algaeButton.place(x=300, y=50, height=150, width=150)
 
-buttons[0].place(x=313, y=390, height=50, width=50)
-buttons[1].place(x=387, y=390, height=50, width=50)
-buttons[2].place(x=484, y=350, height=50, width=50)
-buttons[3].place(x=515, y=290, height=50, width=50)
-buttons[4].place(x=515, y=160, height=50, width=50)
-buttons[5].place(x=484, y=100, height=50, width=50)
-buttons[6].place(x=387, y=60, height=50, width=50)
-buttons[7].place(x=313, y=60, height=50, width=50)
-buttons[8].place(x=215, y=100, height=50, width=50)
-buttons[9].place(x=185, y=160, height=50, width=50)
-buttons[10].place(x=185, y=290, height=50, width=50)
-buttons[11].place(x=215, y=350, height=50, width=50)
+leftButton = tk.Button(window, text="Left", bg="#bcff7d", font=("Book Antiqua", 18))
+leftButton.place(x=50, y=250, height=150, width=150)
 
+rightButton = tk.Button(window, text="Right", bg="#bcff7d", font=("Book Antiqua", 18))
+rightButton.place(x=300, y=250, height=150, width=150)
 
-#buttons for selecting level
-gamePiece = tk.Button(window, text="Coral", bg="#9400D3", font=("Book Antiqua", 18))
-gamePiece.config(command=gamePieceSelect)
-gamePiece.place(x=50, y=117, height=100, width=100)
-
-resetButton = tk.Button(window, text="Reset", bg="white", font=("Book Antiqua", 18))
-resetButton.config(command=reset)
-resetButton.place(x=50, y=283, height=100, width=100)
+resetButton = tk.Button(window, text="Reset", bg="#faf5af", font=("Book Antiqua", 18))
+resetButton.place(x=50, y=430, height=40, width=450)
 
 buttons2 = []
 j = 0
