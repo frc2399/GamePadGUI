@@ -8,6 +8,7 @@ import sys
 from networktables import NetworkTables
 gameMode = 1
 g_allianceColor="white"
+indicator = False
 
 def buttonPressed(i):
     global location
@@ -58,6 +59,24 @@ def testValueChange():
         testButton.config(text="Test1")
     print("Game mode is " + str(gameMode))
     scoringStateTables.putNumber("GameMode", gameMode)
+
+def indicatorChange():
+    global indicator
+    if indicator == False: #or whatever we get from the networktable
+        indicator = True
+        indicatorButton.config(text="true")
+        indicatorButton.config(bg="#bcff7d")
+    else:
+        indicator = False
+        indicatorButton.config(text="false")
+        indicatorButton.config(bg='gray')
+    print("Indicator is " + str(indicator))
+    scoringStateTables.putBoolean("Indicator", indicator)
+
+def indicatorState():
+    global indicator
+    indicator = newEntry.getBoolean(False)
+    root.after(0, lambda: indicatorButton.config(bg="#bcff7d" if indicator == True else 'gray'))
 
 #change color of hexagon depending on alliance color
 def valueChanged(table, key, value, isNew): 
@@ -110,8 +129,10 @@ else:
 
 #creates table and sets to none
 scoringStateTables = NetworkTables.getTable("sidecarTable")
+scoringStateTables.addEntryListener(listener=indicatorState, key="Indicator", immediateNotify=True)
 scoringStateTables.putString("scoringLocation", "")
 scoringStateTables.putString("scoringLevel", "")
+newEntry = scoringStateTables.getEntry("Indicator")
 
 #set default intake mode to coral
 currentIntakeMode = 1
@@ -139,6 +160,10 @@ resetButton.place(x=50, y=330, height=100, width=100)
 testButton = tk.Button(window, text="Test", bg="white", font=("Book Antiqua", 18))
 testButton.config(command=testValueChange)
 testButton.place(x=50, y=210, height=100, width=100)
+
+indicatorButton = tk.Button(window, text="On", bg='white', font=("Book Antiqua", 18))
+indicatorButton.config(command=indicatorChange)
+indicatorButton.place(x=200, y=210, height=100, width=100)
 
 buttons2 = []
 j = 0
