@@ -10,13 +10,6 @@ gameMode = 1
 g_allianceColor="white"
 indicator = False
 
-def buttonPressed(i):
-    global location
-    location = buttonLabels[i]
-
-    print(location + " was chosen")
-    scoringStateTables.putString("scoringLocation", location)
-
 def scoringLevel(button, place):
     global level
     for butt in buttons2:
@@ -76,7 +69,7 @@ def indicatorChange():
 def indicatorState():
     global indicator
     indicator = newEntry.getBoolean(False)
-    root.after(0, lambda: indicatorButton.config(bg="#bcff7d" if indicator == True else 'gray'))
+    window.after(0, lambda: indicatorButton.config(bg="#bcff7d" if indicator == True else 'gray'))
 
 #change color of hexagon depending on alliance color
 def valueChanged(table, key, value, isNew): 
