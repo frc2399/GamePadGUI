@@ -94,7 +94,6 @@ else:
 
 #creates table and sets to none
 sidecarTables = NetworkTables.getTable("sidecarTable")
-sidecarTables.putString("scoringLocation", "")
 sidecarTables.putString("scoringLevel", "")
 
 #set default intake mode to coral
