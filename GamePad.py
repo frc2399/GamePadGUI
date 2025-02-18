@@ -8,9 +8,9 @@ import sys
 from networktables import NetworkTables
 global used_combinations
 g_allianceColor="white"
+start = True
 
 def scoringLevel(button, place):
-    global level
     for butt in buttons2:
         if butt['bg'] == g_allianceColor:
             butt['bg'] = 'white'
@@ -19,7 +19,6 @@ def scoringLevel(button, place):
 
     print(place + " was chosen")
     sidecarTables.putString("scoringLevel", place)
-    level = place
 
 def algaeSelect():
     global gamePieceMode
@@ -39,6 +38,7 @@ def algaeSelect():
 
 def coralSelect():
     global gamePieceMode
+    global start
     if (gamePieceMode == "algae"):
         gamePieceMode = "coral"
 
@@ -46,9 +46,13 @@ def coralSelect():
         coralButton.config(bg="#8bd7f7") #blue
         for butt in buttons2:
             butt['bg'] = 'white'
-        leftButton.config(bg='#bcff7d') #green
-        rightButton.config(bg='#bcff7d') #green
+        leftButton.config(bg='#bcff7d', command=leftRightSelect) #green
+        rightButton.config(bg='#bcff7d', command=leftRightSelect) #green
         buttons2[3].config(bg='white', command=lambda: scoringLevel(buttons2[3], "Level 4"))
+    elif start == True:
+        start = False
+        leftButton.config(bg='#bcff7d', command=leftRightSelect) #green
+        rightButton.config(bg='#bcff7d', command=leftRightSelect) #green
     else:
         algaeButton.config(bg="#e3e3e3") #gray
 
@@ -141,11 +145,9 @@ coralButton.config(command=coralSelect)
 coralButton.place(x=300, y=50, height=150, width=150)
 
 leftButton = tk.Button(window, text="Left", bg="#bcff7d", font=("Book Antiqua", 18))
-leftButton.config(command=leftRightSelect)
 leftButton.place(x=50, y=250, height=150, width=150)
 
 rightButton = tk.Button(window, text="Right", bg="#bcff7d", font=("Book Antiqua", 18))
-rightButton.config(command=leftRightSelect)
 rightButton.place(x=300, y=250, height=150, width=150)
 
 buttons2 = []
