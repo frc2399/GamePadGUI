@@ -68,6 +68,7 @@ def leftRightSelect():
         leftButton.config(bg='#bcff7d')
         rightButton.config(bg='gray')
     print("Position " + position + " was chosen")
+    sidecarTables.putString("Position", position)
 
 #change color of hexagon depending on alliance color
 def valueChanged(table, key, value, isNew): 
@@ -110,12 +111,11 @@ else:
 
 #creates table and sets to none
 sidecarTables = NetworkTables.getTable("sidecarTable")
-sidecarTables.putString("scoringLocation", "")
 sidecarTables.putString("scoringLevel", "")
 
 #set default intake mode to coral
 gamePieceMode = "coral"
-sidecarTables.putString("GameMode", gamePieceMode)
+sidecarTables.putString("gamePieceMode", gamePieceMode)
 
 #set default left/right to right
 position = "right"
