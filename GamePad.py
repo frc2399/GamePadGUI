@@ -7,7 +7,6 @@ import sys
 
 from networktables import NetworkTables
 global used_combinations
-gameMode = 1
 g_allianceColor="white"
 
 def scoringLevel(button, place):
@@ -23,12 +22,13 @@ def scoringLevel(button, place):
     level = place
 
 def algaeSelect():
-    global gamePiece
     global gamePieceMode
-    if (gamePieceMode == "coral") or (gamePieceMode == "none"):
+    if gamePieceMode == "coral":
         gamePieceMode = "algae"
 
         algaeButton.config(bg="#fca7a7")
+        for butt in buttons2:
+            butt['bg'] = 'white'
         buttons2[3].config(bg='gray', command=obsolete)
         leftButton.config(bg='gray', command=obsolete)
         rightButton.config(bg='gray', command=obsolete)
@@ -38,20 +38,36 @@ def algaeSelect():
     sidecarTables.putString("gamePieceMode", gamePieceMode)
 
 def coralSelect():
-    global gamePiece
     global gamePieceMode
-    if (gamePieceMode == "algae") or (gamePieceMode == "none"):
+    if (gamePieceMode == "algae"):
         gamePieceMode = "coral"
 
         algaeButton.config(bg="#e3e3e3") #gray
         coralButton.config(bg="#8bd7f7") #blue
+        for butt in buttons2:
+            butt['bg'] = 'white'
         leftButton.config(bg='#bcff7d') #green
         rightButton.config(bg='#bcff7d') #green
         buttons2[3].config(bg='white', command=lambda: scoringLevel(buttons2[3], "Level 4"))
+    else:
+        algaeButton.config(bg="#e3e3e3") #gray
 
     print("Intake mode " + gamePieceMode + " was chosen")
     sidecarTables.putString("gamePieceMode", gamePieceMode)
 
+def leftRightSelect():
+    global position
+    if position == "left":
+        position = "right"
+
+        leftButton.config(bg='gray')
+        rightButton.config(bg='#bcff7d')
+    else:
+        position = "left"
+
+        leftButton.config(bg='#bcff7d')
+        rightButton.config(bg='gray')
+    print("Position " + position + " was chosen")
 
 #change color of hexagon depending on alliance color
 def valueChanged(table, key, value, isNew): 
@@ -101,6 +117,10 @@ sidecarTables.putString("scoringLevel", "")
 gamePieceMode = "coral"
 sidecarTables.putString("GameMode", gamePieceMode)
 
+#set default left/right to right
+position = "right"
+sidecarTables.putString("Position", position)
+
 #set default location and level to nothing
 location = ""
 level = ""
@@ -121,9 +141,11 @@ coralButton.config(command=coralSelect)
 coralButton.place(x=300, y=50, height=150, width=150)
 
 leftButton = tk.Button(window, text="Left", bg="#bcff7d", font=("Book Antiqua", 18))
+leftButton.config(command=leftRightSelect)
 leftButton.place(x=50, y=250, height=150, width=150)
 
 rightButton = tk.Button(window, text="Right", bg="#bcff7d", font=("Book Antiqua", 18))
+rightButton.config(command=leftRightSelect)
 rightButton.place(x=300, y=250, height=150, width=150)
 
 buttons2 = []

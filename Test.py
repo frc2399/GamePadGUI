@@ -66,10 +66,11 @@ def indicatorChange():
     print("Indicator is " + str(indicator))
     scoringStateTables.putBoolean("Indicator", indicator)
 
-def indicatorState():
+def indicatorState(table, key, value, isNew):
     global indicator
-    indicator = newEntry.getBoolean(False)
-    window.after(0, lambda: indicatorButton.config(bg="#bcff7d" if indicator == True else 'gray'))
+    print("Value is " + str(value))
+    #indicator = newEntry.getBoolean(False)
+    window.after(0, lambda: indicatorButton.config(bg="#bcff7d" if value == True else 'gray'))
 
 #change color of hexagon depending on alliance color
 def valueChanged(table, key, value, isNew): 
