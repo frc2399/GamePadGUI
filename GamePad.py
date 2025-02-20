@@ -12,9 +12,9 @@ start = True
 
 def scoringLevel(button, place):
     for butt in buttons2:
-        if butt['bg'] == g_allianceColor:
-            butt['bg'] = 'white'
-    button['bg'] = g_allianceColor
+        if butt['bg'] == 'white':
+            butt['bg'] = 'gray'
+    button['bg'] = 'white'
 
 
     print(place + " was chosen")
@@ -46,31 +46,42 @@ def coralSelect():
         coralButton.config(bg="#8bd7f7") #blue
         for butt in buttons2:
             butt['bg'] = 'white'
-        leftButton.config(bg='#bcff7d', command=leftRightSelect) #green
-        rightButton.config(bg='#bcff7d', command=leftRightSelect) #green
+        leftButton.config(bg='#bcff7d', command=leftSelect) #green
+        rightButton.config(bg='#bcff7d', command=rightSelect) #green
         buttons2[3].config(bg='white', command=lambda: scoringLevel(buttons2[3], "Level 4"))
     elif start == True:
         start = False
-        leftButton.config(bg='#bcff7d', command=leftRightSelect) #green
-        rightButton.config(bg='#bcff7d', command=leftRightSelect) #green
+        leftButton.config(bg='#bcff7d', command=leftSelect) #green
+        rightButton.config(bg='#bcff7d', command=rightSelect) #green
+        algaeButton.config(bg='gray')
     else:
         algaeButton.config(bg="#e3e3e3") #gray
 
     print("Intake mode " + gamePieceMode + " was chosen")
     sidecarTables.putString("gamePieceMode", gamePieceMode)
 
-def leftRightSelect():
+def leftSelect():
+    global position
+    if position == "right":
+        position = "left"
+
+        rightButton.config(bg='gray')
+        leftButton.config(bg='#bcff7d')
+    print("Position " + position + " was chosen")
+    sidecarTables.putString("Position", position)
+
+def rightSelect():
     global position
     if position == "left":
         position = "right"
 
-        leftButton.config(bg='gray')
         rightButton.config(bg='#bcff7d')
-    else:
-        position = "left"
+        leftButton.config(bg='gray')
+    elif position == "right":
+        position = "right"
 
-        leftButton.config(bg='#bcff7d')
-        rightButton.config(bg='gray')
+        rightButton.config(bg='#bcff7d')
+        leftButton.config(bg='gray')
     print("Position " + position + " was chosen")
     sidecarTables.putString("Position", position)
 
