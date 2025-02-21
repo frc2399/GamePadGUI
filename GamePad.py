@@ -7,7 +7,6 @@ import sys
 
 from networktables import NetworkTables
 global used_combinations
-g_allianceColor="white"
 start = True
 
 def scoringLevel(button, place):
@@ -42,7 +41,7 @@ def coralSelect():
     if (gamePieceMode == "algae"):
         gamePieceMode = "coral"
 
-        algaeButton.config(bg="#e3e3e3") #gray
+        algaeButton.config(bg="gray") 
         coralButton.config(bg="#8bd7f7") #blue
         for butt in buttons2:
             butt['bg'] = 'white'
@@ -55,7 +54,7 @@ def coralSelect():
         rightButton.config(bg='#bcff7d', command=rightSelect) #green
         algaeButton.config(bg='gray')
     else:
-        algaeButton.config(bg="#e3e3e3") #gray
+        algaeButton.config(bg="gray") 
 
     print("Intake mode " + gamePieceMode + " was chosen")
     sidecarTables.putString("gamePieceMode", gamePieceMode)
@@ -145,21 +144,22 @@ used_combinations = set()
 window = tk.Tk() #create window
 window.geometry("850x500") #size
 window.title("sidecar") #title
+window.config(bg=g_allianceColor)
 
 #buttons for selecting game piece
 algaeButton = tk.Button(window, text="Algae", bg="#fca7a7", font=("Book Antiqua", 18))
 algaeButton.config(command=algaeSelect)
-algaeButton.place(x=50, y=50, height=150, width=150)
+algaeButton.place(x=50, y=40, height=300, width=300)
 
 coralButton = tk.Button(window,  text="Coral", bg="#8bd7f7", font=("Book Antiqua", 18))
 coralButton.config(command=coralSelect)
-coralButton.place(x=300, y=50, height=150, width=150)
+coralButton.place(x=450, y=40, height=300, width=300)
 
 leftButton = tk.Button(window, text="Left", bg="#bcff7d", font=("Book Antiqua", 18))
-leftButton.place(x=50, y=250, height=150, width=150)
+leftButton.place(x=50, y=390, height=300, width=300)
 
 rightButton = tk.Button(window, text="Right", bg="#bcff7d", font=("Book Antiqua", 18))
-rightButton.place(x=300, y=250, height=150, width=150)
+rightButton.place(x=450, y=390, height=300, width=300)
 
 buttons2 = []
 j = 0
@@ -173,16 +173,16 @@ while j <= 3:
     buttons2.append(button)
     j += 1
 
-buttons2[3].place(x=600, y=60, height=75, width=200)
+buttons2[3].place(x=800, y=70, height=125, width=430)
 buttons2[3].config(command=lambda: scoringLevel(buttons2[3], "Level 4"))
 
-buttons2[2].place(x=600, y=162, height=75, width=200)
+buttons2[2].place(x=800, y=220, height=125, width=430)
 buttons2[2].config(command=lambda: scoringLevel(buttons2[2], "Level 3"))
 
-buttons2[1].place(x=600, y=263, height=75, width=200)
+buttons2[1].place(x=800, y=370, height=125, width=430)
 buttons2[1].config(command=lambda: scoringLevel(buttons2[1], "Level 2"))
 
-buttons2[0].place(x=600, y=365, height=75, width=200)
+buttons2[0].place(x=800, y=520, height=125, width=430)
 buttons2[0].config(command=lambda: scoringLevel(buttons2[0], "Level 1"))
 
 #run
