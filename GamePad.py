@@ -96,7 +96,6 @@ def valueChanged(table, key, value, isNew):
         else:
             g_allianceColor = "#1E90FF"
 
-
 def obsolete():
     print("Button obsolete for selected intake mode")
 
@@ -144,21 +143,21 @@ used_combinations = set()
 window = tk.Tk() #create window
 window.geometry("850x500") #size
 window.title("sidecar") #title
-window.config(bg=g_allianceColor)
+#window.config(bg=g_allianceColor)
 
 #buttons for selecting game piece
-algaeButton = tk.Button(window, text="Algae", bg="#fca7a7", font=("Book Antiqua", 18))
+algaeButton = tk.Button(window, text="Algae", bg="#fca7a7", font=("Fira Mono", 80))
 algaeButton.config(command=algaeSelect)
 algaeButton.place(x=50, y=40, height=300, width=300)
 
-coralButton = tk.Button(window,  text="Coral", bg="#8bd7f7", font=("Book Antiqua", 18))
+coralButton = tk.Button(window,  text="Coral", bg="#8bd7f7", font=("Fira Mono", 80))
 coralButton.config(command=coralSelect)
 coralButton.place(x=450, y=40, height=300, width=300)
 
-leftButton = tk.Button(window, text="Left", bg="#bcff7d", font=("Book Antiqua", 18))
+leftButton = tk.Button(window, text="Left", bg="#bcff7d", font=("Fira Mono", 80))
 leftButton.place(x=50, y=390, height=300, width=300)
 
-rightButton = tk.Button(window, text="Right", bg="#bcff7d", font=("Book Antiqua", 18))
+rightButton = tk.Button(window, text="Right", bg="#bcff7d", font=("Fira Mono", 80))
 rightButton.place(x=450, y=390, height=300, width=300)
 
 buttons2 = []
@@ -168,7 +167,7 @@ while j <= 3:
         window,
         text=('L' + str(j+1)),
         bg="white",
-        font=('Book Antiqua', 18),
+        font=('Fira Mono', 80),
     )
     buttons2.append(button)
     j += 1
