@@ -126,7 +126,7 @@ scoringStateTables = NetworkTables.getTable("sidecarTable")
 scoringStateTables.addEntryListener(listener=indicatorState, key="Indicator", immediateNotify=True)
 scoringStateTables.putString("scoringLocation", "")
 scoringStateTables.putString("scoringLevel", "")
-newEntry = scoringStateTables.getEntry("Indicator")
+#newEntry = scoringStateTables.getEntry("Indicator")
 
 #set default intake mode to coral
 currentIntakeMode = 1

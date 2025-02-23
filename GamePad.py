@@ -84,6 +84,40 @@ def rightSelect():
     print("Position " + position + " was chosen")
     sidecarTables.putString("Position", position)
 
+def algaeIndicatorChange():
+    global algaeIndicator
+    if algaeIndicator == False: 
+        algaeIndicator = True
+        algaeIndicatorButton.config(bg="#2efa23")
+    else:
+        algaeIndicator = False
+        algaeIndicatorButton.config(bg='gray')
+    print("Algae in robot is " + str(algaeIndicator))
+    sidecarTables.putBoolean("hasAlgae", algaeIndicator)
+
+def coralIndicatorChange():
+    global coralIndicator
+    if coralIndicator == False: 
+        coralIndicator = True
+        coralIndicatorButton.config(bg="#2efa23")
+    else:
+        coralIndicator = False
+        coralIndicatorButton.config(bg='gray')
+    print("Coral in robot is " + str(coralIndicator))
+    sidecarTables.putBoolean("hasCoral", coralIndicator)
+
+def algaeIndicatorState(table, key, value, isNew):
+    global algaeIndicator
+    print("Algae in robot is " + str(value))
+    window.after(0, lambda: algaeIndicatorButton.config(bg="#2efa23" if value == True else 'gray'))
+    algaeIndicator = value
+
+def coralIndicatorState(table, key, value, isNew):
+    global coralIndicator
+    print("Coral in robot is " + str(value))
+    window.after(0, lambda: coralIndicatorButton.config(bg="#2efa23" if value == True else 'gray'))
+    coralIndicator = value
+
 #change color of hexagon depending on alliance color
 def valueChanged(table, key, value, isNew): 
     global g_allianceColor
@@ -122,8 +156,12 @@ else:
     print("Failed to connect to NetworkTables server")
 
 
-#creates table and sets to none
+#creates table and alage/coral listeners
 sidecarTables = NetworkTables.getTable("sidecarTable")
+sidecarTables.addEntryListener(listener=algaeIndicatorState, key="hasAlgae", immediateNotify=True)
+sidecarTables.addEntryListener(listener=coralIndicatorState, key="hasCoral", immediateNotify=True)
+
+#sets scoring level to none
 sidecarTables.putString("scoringLevel", "")
 
 #set default intake mode to coral
@@ -133,6 +171,9 @@ sidecarTables.putString("gamePieceMode", gamePieceMode)
 #set default left/right to right
 position = "right"
 sidecarTables.putString("Position", position)
+
+algaeIndicator = False
+coralIndicator = False
 
 #set default location and level to nothing
 location = ""
@@ -148,17 +189,25 @@ window.title("sidecar") #title
 #buttons for selecting game piece
 algaeButton = tk.Button(window, text="Algae", bg="#fca7a7", font=("Fira Mono", 80))
 algaeButton.config(command=algaeSelect)
-algaeButton.place(x=50, y=40, height=300, width=300)
+algaeButton.place(x=50, y=150, height=250, width=300)
 
 coralButton = tk.Button(window,  text="Coral", bg="#8bd7f7", font=("Fira Mono", 80))
 coralButton.config(command=coralSelect)
-coralButton.place(x=450, y=40, height=300, width=300)
+coralButton.place(x=410, y=150, height=250, width=300)
 
 leftButton = tk.Button(window, text="Left", bg="#bcff7d", font=("Fira Mono", 80))
-leftButton.place(x=50, y=390, height=300, width=300)
+leftButton.place(x=50, y=420, height=250, width=300)
 
 rightButton = tk.Button(window, text="Right", bg="#bcff7d", font=("Fira Mono", 80))
-rightButton.place(x=450, y=390, height=300, width=300)
+rightButton.place(x=410, y=420, height=250, width=300)
+
+algaeIndicatorButton = tk.Button(window, text="hasAlgae", bg="gray", font=("Fira Mono", 23))
+algaeIndicatorButton.config(command=algaeIndicatorChange)
+algaeIndicatorButton.place(x=125, y=30, height=100, width=140)
+
+coralIndicatorButton = tk.Button(window, text="hasCoral", bg="gray", font=("Fira Mono", 23))
+coralIndicatorButton.config(command=coralIndicatorChange)
+coralIndicatorButton.place(x=485, y=30, height=100, width=140)
 
 buttons2 = []
 j = 0
