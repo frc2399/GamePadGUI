@@ -11,9 +11,9 @@ start = True
 
 def scoringLevel(button, place):
     for butt in buttons2:
-        if butt['bg'] == 'white':
+        if butt['bg'] == '#FD8930':
             butt['bg'] = 'gray'
-    button['bg'] = 'white'
+    button['bg'] = '#FD8930'
 
 
     print(place + " was chosen")
@@ -24,9 +24,9 @@ def algaeSelect():
     if gamePieceMode == "coral":
         gamePieceMode = "algae"
 
-        algaeButton.config(bg="#fca7a7")
+        algaeButton.config(bg="#08C2AC") #blue
         for butt in buttons2:
-            butt['bg'] = 'white'
+            butt['bg'] = "#FD8930"
         buttons2[3].config(bg='gray', command=obsolete)
         leftButton.config(bg='gray', command=obsolete)
         rightButton.config(bg='gray', command=obsolete)
@@ -42,12 +42,12 @@ def coralSelect():
         gamePieceMode = "coral"
 
         algaeButton.config(bg="gray") 
-        coralButton.config(bg="#8bd7f7") #blue
+        coralButton.config(bg="#FC59CE") #purple
         for butt in buttons2:
-            butt['bg'] = 'white'
+            butt['bg'] = "#FD8930"
         leftButton.config(bg='#bcff7d', command=leftSelect) #green
         rightButton.config(bg='#bcff7d', command=rightSelect) #green
-        buttons2[3].config(bg='white', command=lambda: scoringLevel(buttons2[3], "Level 4"))
+        buttons2[3].config(bg="#FD8930", command=lambda: scoringLevel(buttons2[3], "Level 4"))
     elif start == True:
         start = False
         leftButton.config(bg='#bcff7d', command=leftSelect) #green
@@ -65,7 +65,7 @@ def leftSelect():
         position = "left"
 
         rightButton.config(bg='gray')
-        leftButton.config(bg='#bcff7d')
+        leftButton.config(bg='#FEDF78') #yellow
     print("Position " + position + " was chosen")
     sidecarTables.putString("Position", position)
 
@@ -74,12 +74,12 @@ def rightSelect():
     if position == "left":
         position = "right"
 
-        rightButton.config(bg='#bcff7d')
+        rightButton.config(bg='#FEDF78')
         leftButton.config(bg='gray')
     elif position == "right":
         position = "right"
 
-        rightButton.config(bg='#bcff7d')
+        rightButton.config(bg='#FEDF78')
         leftButton.config(bg='gray')
     print("Position " + position + " was chosen")
     sidecarTables.putString("Position", position)
@@ -108,12 +108,14 @@ def coralIndicatorChange():
 
 def algaeIndicatorState(table, key, value, isNew):
     global algaeIndicator
+    global window
     print("Algae in robot is " + str(value))
     window.after(0, lambda: algaeIndicatorButton.config(bg="#2efa23" if value == True else 'gray'))
     algaeIndicator = value
 
 def coralIndicatorState(table, key, value, isNew):
     global coralIndicator
+    global window
     print("Coral in robot is " + str(value))
     window.after(0, lambda: coralIndicatorButton.config(bg="#2efa23" if value == True else 'gray'))
     coralIndicator = value
@@ -187,18 +189,18 @@ window.title("sidecar") #title
 #window.config(bg=g_allianceColor)
 
 #buttons for selecting game piece
-algaeButton = tk.Button(window, text="Algae", bg="#fca7a7", font=("Fira Mono", 80))
+algaeButton = tk.Button(window, text="Algae", bg="#08C2AC", font=("Fira Mono", 80))
 algaeButton.config(command=algaeSelect)
 algaeButton.place(x=50, y=150, height=250, width=300)
 
-coralButton = tk.Button(window,  text="Coral", bg="#8bd7f7", font=("Fira Mono", 80))
+coralButton = tk.Button(window,  text="Coral", bg="#FC59CE", font=("Fira Mono", 80))
 coralButton.config(command=coralSelect)
 coralButton.place(x=410, y=150, height=250, width=300)
 
-leftButton = tk.Button(window, text="Left", bg="#bcff7d", font=("Fira Mono", 80))
+leftButton = tk.Button(window, text="Left", bg="#FEDF78", font=("Fira Mono", 80))
 leftButton.place(x=50, y=420, height=250, width=300)
 
-rightButton = tk.Button(window, text="Right", bg="#bcff7d", font=("Fira Mono", 80))
+rightButton = tk.Button(window, text="Right", bg="#FEDF78", font=("Fira Mono", 80))
 rightButton.place(x=410, y=420, height=250, width=300)
 
 algaeIndicatorButton = tk.Button(window, text="hasAlgae", bg="gray", font=("Fira Mono", 23))
@@ -215,7 +217,7 @@ while j <= 3:
     button = tk.Button(
         window,
         text=('L' + str(j+1)),
-        bg="white",
+        bg="#FD8930", #orange
         font=('Fira Mono', 80),
     )
     buttons2.append(button)
