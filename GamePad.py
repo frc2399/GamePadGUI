@@ -45,13 +45,13 @@ def coralSelect():
         coralButton.config(bg="#FC59CE") #purple
         for butt in buttons2:
             butt['bg'] = "#FD8930"
-        leftButton.config(bg='#bcff7d', command=leftSelect) #green
-        rightButton.config(bg='#bcff7d', command=rightSelect) #green
+        leftButton.config(bg='#FEDF78', command=leftSelect) #yellow
+        rightButton.config(bg='#FEDF78', command=rightSelect) #yellow
         buttons2[3].config(bg="#FD8930", command=lambda: scoringLevel(buttons2[3], "Level 4"))
     elif start == True:
         start = False
-        leftButton.config(bg='#bcff7d', command=leftSelect) #green
-        rightButton.config(bg='#bcff7d', command=rightSelect) #green
+        leftButton.config(bg='#FEDF78', command=leftSelect) #yellow
+        rightButton.config(bg='#FEDF78', command=rightSelect) #yellow
         algaeButton.config(bg='gray')
     else:
         algaeButton.config(bg="gray") 
@@ -218,7 +218,7 @@ while j <= 3:
         window,
         text=('L' + str(j+1)),
         bg="#FD8930", #orange
-        font=('Fira Mono', 80),
+        font=("Fira Mono", 80),
     )
     buttons2.append(button)
     j += 1
