@@ -8,6 +8,7 @@ import sys
 from networktables import NetworkTables
 global used_combinations
 start = True
+startLeft = True
 
 def scoringLevel(button, place):
     for butt in buttons2:
@@ -61,11 +62,13 @@ def coralSelect():
 
 def leftSelect():
     global position
-    if position == "right":
-        position = "left"
+    position = "left"
 
-        rightButton.config(bg='gray')
-        leftButton.config(bg='#FEDF78') #yellow
+    rightButton.config(bg='gray')
+    leftButton.config(bg='#FEDF78') #yellow
+
+    
+        
     print("Position " + position + " was chosen")
     sidecarTables.putString("Position", position)
 
@@ -199,9 +202,11 @@ coralButton.place(x=410, y=150, height=250, width=300)
 
 leftButton = tk.Button(window, text="A", bg="#FEDF78", font=("Fira Mono", 80))
 leftButton.place(x=50, y=420, height=250, width=300)
+leftButton.config(command=leftSelect)
 
 rightButton = tk.Button(window, text="B", bg="#FEDF78", font=("Fira Mono", 80))
 rightButton.place(x=410, y=420, height=250, width=300)
+rightButton.config(command=rightSelect)
 
 algaeIndicatorButton = tk.Button(window, text="hasAlgae", bg="gray", font=("Fira Mono", 23))
 algaeIndicatorButton.config(command=algaeIndicatorChange)
