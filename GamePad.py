@@ -197,10 +197,10 @@ coralButton = tk.Button(window,  text="Coral", bg="#FC59CE", font=("Fira Mono", 
 coralButton.config(command=coralSelect)
 coralButton.place(x=410, y=150, height=250, width=300)
 
-leftButton = tk.Button(window, text="Left", bg="#FEDF78", font=("Fira Mono", 80))
+leftButton = tk.Button(window, text="A", bg="#FEDF78", font=("Fira Mono", 80))
 leftButton.place(x=50, y=420, height=250, width=300)
 
-rightButton = tk.Button(window, text="Right", bg="#FEDF78", font=("Fira Mono", 80))
+rightButton = tk.Button(window, text="B", bg="#FEDF78", font=("Fira Mono", 80))
 rightButton.place(x=410, y=420, height=250, width=300)
 
 algaeIndicatorButton = tk.Button(window, text="hasAlgae", bg="gray", font=("Fira Mono", 23))
