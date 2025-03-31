@@ -8,7 +8,6 @@ import sys
 from networktables import NetworkTables
 global used_combinations
 start = True
-startLeft = True
 
 def scoringLevel(button, place):
     for butt in buttons2:
@@ -19,6 +18,30 @@ def scoringLevel(button, place):
 
     print(place + " was chosen")
     sidecarTables.putString("scoringLevel", place)
+
+def endgameSelect():
+    global endgame
+    if endgame == False:
+        endgame = True
+        for butt in buttons2:
+            if butt['bg'] == '#FD8930':
+                butt['bg'] = 'gray'
+        leftButton.config(bg='gray', command=obsolete)
+        rightButton.config(bg='gray', command=obsolete)
+        coralButton.config(bg='gray', command=obsolete)
+        algaeButton.config(bg='gray', command=obsolete)
+    else:
+        endgame = False
+        for butt in buttons2:
+            butt['bg'] = "#FD8930"
+        leftButton.config(bg='#FEDF78', command=leftSelect) #yellow
+        rightButton.config(bg='#FEDF78', command=rightSelect) #yellow
+        buttons2[3].config(bg="#FD8930", command=lambda: scoringLevel(buttons2[3], "Level 4"))
+        algaeButton.config(bg='#08C2AC', command=algaeSelect)
+        coralButton.config(bg='#FC59CE', command=coralSelect)
+
+    print("Endgame Mode is " + str(endgame))
+    sidecarTables.putString("endgame", endgame)
 
 def algaeSelect():
     global gamePieceMode
@@ -66,8 +89,6 @@ def leftSelect():
 
     rightButton.config(bg='gray')
     leftButton.config(bg='#FEDF78') #yellow
-
-    
         
     print("Position " + position + " was chosen")
     sidecarTables.putString("Position", position)
@@ -169,6 +190,10 @@ sidecarTables.addEntryListener(listener=coralIndicatorState, key="hasCoral", imm
 #sets scoring level to none
 sidecarTables.putString("scoringLevel", "")
 
+#set default to NOT endgame mode
+endgame = False
+sidecarTables.putString("endgame", endgame)
+
 #set default intake mode to coral
 gamePieceMode = "coral"
 sidecarTables.putString("gamePieceMode", gamePieceMode)
@@ -216,6 +241,10 @@ coralIndicatorButton = tk.Button(window, text="hasCoral", bg="gray", font=("Fira
 coralIndicatorButton.config(command=coralIndicatorChange)
 coralIndicatorButton.place(x=485, y=30, height=100, width=140)
 
+endgameButton = tk.Button(window, text="ENDGAME", bg="#E4080A", font=("Fira Mono", 40))
+endgameButton.config(command=endgameSelect)
+endgameButton.place(x=800, y=625, height =80, width=430)
+
 buttons2 = []
 j = 0
 while j <= 3:
@@ -228,16 +257,16 @@ while j <= 3:
     buttons2.append(button)
     j += 1
 
-buttons2[3].place(x=800, y=70, height=125, width=430)
+buttons2[3].place(x=800, y=30, height=125, width=430)
 buttons2[3].config(command=lambda: scoringLevel(buttons2[3], "Level 4"))
 
-buttons2[2].place(x=800, y=220, height=125, width=430)
+buttons2[2].place(x=800, y=180, height=125, width=430)
 buttons2[2].config(command=lambda: scoringLevel(buttons2[2], "Level 3"))
 
-buttons2[1].place(x=800, y=370, height=125, width=430)
+buttons2[1].place(x=800, y=330, height=125, width=430)
 buttons2[1].config(command=lambda: scoringLevel(buttons2[1], "Level 2"))
 
-buttons2[0].place(x=800, y=520, height=125, width=430)
+buttons2[0].place(x=800, y=480, height=125, width=430)
 buttons2[0].config(command=lambda: scoringLevel(buttons2[0], "Level 1"))
 
 #run
