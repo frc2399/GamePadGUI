@@ -192,7 +192,7 @@ sidecarTables.putString("scoringLevel", "")
 
 #set default to NOT endgame mode
 endgame = False
-sidecarTables.putString("endgame", endgame)
+sidecarTables.putBoolean("endgame", endgame)
 
 #set default intake mode to coral
 gamePieceMode = "coral"
