@@ -41,7 +41,7 @@ def endgameSelect():
         coralButton.config(bg='#FC59CE', command=coralSelect)
 
     print("Endgame Mode is " + str(endgame))
-    sidecarTables.putString("endgame", endgame)
+    sidecarTables.putBoolean("endgame", endgame)
 
 def algaeSelect():
     global gamePieceMode
